@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Create Post - MindCanvas{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm">
+    <h2 class="mb-3">Create a New Post</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Create Post</button>
+    </form>
+    <!-- Add margin-top or keep it separate so it doesn't overlap -->
+    <a href="{% url 'index' %}" class="btn btn-link mt-3">Back to Home</a>
+</div>
+{% endblock %}

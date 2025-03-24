@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Home - MindCanvas{% endblock %}
+{% block content %}
+<div class="card p-4 shadow-sm">
+    <h1 class="mb-3">Welcome to MindCanvas</h1>
+
+    <!-- Search Form (optional) -->
+    <form method="get" action="{% url 'index' %}" class="d-flex mb-3">
+        <input type="text" name="q" class="form-control me-2" placeholder="Search posts..." value="{{ query|default:'' }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <ul class="list-group">
+        {% for post in posts %}
+            <li class="list-group-item">
+                <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+                <span class="text-muted">by {{ post.author.username }} on {{ post.created_at }}</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No posts found.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Pagination Controls -->
+    {% if posts.has_other_pages %}
+    <div class="mt-3">
+        <nav>
+            <ul class="pagination">
+                {% if posts.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.previous_page_number }}{% if query %}&q={{ query }}{% endif %}">Previous</a>
+                </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+                </li>
+
+                {% if posts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.next_page_number }}{% if query %}&q={{ query }}{% endif %}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

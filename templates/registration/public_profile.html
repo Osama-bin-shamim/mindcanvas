@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}{{ profile_user.username }}'s Profile - MindCanvas{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm">
+    <h2 class="mb-3">{{ profile_user.username }}'s Public Profile</h2>
+    <h4>Posts</h4>
+    <ul class="list-group">
+        {% for post in posts %}
+            <li class="list-group-item">
+                <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+                <span class="text-muted">({{ post.created_at }})</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No posts found.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'search_users' %}" class="btn btn-link mt-3">Search Another User</a>
+</div>
+{% endblock %}

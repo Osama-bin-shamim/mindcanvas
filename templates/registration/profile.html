@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}{{ user.username }}'s Profile - MindCanvas{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm">
+    <h2 class="mb-3">{{ user.username }}'s Profile</h2>
+    <h4>Your Posts</h4>
+    <ul class="list-group">
+        {% for post in posts %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+                    <span class="text-muted">({{ post.created_at }})</span>
+                </div>
+                <div>
+                    <a href="{% url 'edit_post' post.pk %}" class="btn btn-sm btn-warning me-2">Edit</a>
+                    <a href="{% url 'delete_post' post.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No posts yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

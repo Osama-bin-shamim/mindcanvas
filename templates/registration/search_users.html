@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Search Users - MindCanvas{% endblock %}
+
+{% block content %}
+<div class="card p-4 shadow-sm">
+    <h2 class="mb-3">Search Users</h2>
+    <form method="get" action="{% url 'search_users' %}" class="d-flex mb-3">
+        <input type="text" name="q" class="form-control me-2" placeholder="Search by username..." value="{{ query|default:'' }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <ul class="list-group">
+        {% for user in users %}
+            <li class="list-group-item">
+                <a href="{% url 'public_profile' user.username %}">{{ user.username }}</a>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No users found.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
